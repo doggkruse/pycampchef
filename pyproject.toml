@@ -8,6 +8,7 @@ version = "0.1.0"
 description = "Camp Chef grill integration library"
 readme = "README.md"
 license = { file = "LICENSE" }
+authors = [{ name = "Geoffrey Kruse" }]
 requires-python = ">=3.11"
 keywords = ["ble", "bluetooth", "home-assistant", "grill", "camp-chef"]
 dependencies = ["bleak>=0.20.0"]
@@ -28,8 +29,8 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/your-org/pycampchef"
-Issues = "https://github.com/your-org/pycampchef/issues"
+Homepage = "https://github.com/doggkruse/pycampchef"
+Issues = "https://github.com/doggkruse/pycampchef/issues"
 
 [tool.setuptools]
 packages = ["pycampchef"]
