@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pycampchef"
+version = "0.1.0"
+description = "Camp Chef grill integration library"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.11"
+keywords = ["ble", "bluetooth", "home-assistant", "grill", "camp-chef"]
+dependencies = ["bleak>=0.20.0"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: Apache Software License",
+  "Operating System :: MacOS :: MacOS X",
+  "Operating System :: POSIX",
+  "Operating System :: Microsoft :: Windows",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Home Automation",
+  "Topic :: Software Development :: Libraries",
+]
+
+[project.urls]
+Homepage = "https://github.com/your-org/pycampchef"
+Issues = "https://github.com/your-org/pycampchef/issues"
+
+[tool.setuptools]
+packages = ["pycampchef"]
+include-package-data = false
