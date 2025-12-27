@@ -28,6 +28,7 @@ class CampChefBleClient:
         subscribe_ws_ids: Optional[list[int]] = None,
         extra_notify_uuids: Optional[list[str]] = None,
         on_telemetry: Optional[Callable[[GrillTelemetry], Awaitable[None]]] = None,
+        bleak_client: Optional[BleakClient] = None,
     ) -> None:
         self.address = address
         self.vendor = vendor or VENDOR_CONFIGS["campchef"]
@@ -38,7 +39,7 @@ class CampChefBleClient:
         self.extra_notify_uuids = extra_notify_uuids or []
         self._on_telemetry = on_telemetry
 
-        self._client: Optional[BleakClient] = None
+        self._client: Optional[BleakClient] = bleak_client
         self._notify_uuids: list[str] = []
         self._commands = GrillCommandClient(self.write_ws, self.read_ws)
 
@@ -69,9 +70,10 @@ class CampChefBleClient:
             return
 
         try:
-            self._client = BleakClient(
-                self.address, services=[self.vendor.service_uuid]
-            )
+            if self._client is None:
+                self._client = BleakClient(
+                    self.address, services=[self.vendor.service_uuid]
+                )
             _LOGGER.info(
                 "Connecting to %s",
                 getattr(self.address, "address", self.address),
