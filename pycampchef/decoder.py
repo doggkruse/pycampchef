@@ -143,11 +143,6 @@ def _probe_i16_to_f(i16: int) -> Optional[float]:
     return None
 
 
-def _chamber_i16_to_f(i16: int) -> float:
-    # Chamber is Q8.8 fixed-point °F.
-    return i16 / 256.0
-
-
 def decode_notify_payload(raw: bytes) -> GrillTelemetry:
     if not raw:
         return GrillTelemetry(raw=raw)
@@ -163,15 +158,13 @@ def decode_notify_payload(raw: bytes) -> GrillTelemetry:
     telem = GrillTelemetry(ws_id=ws_id, raw=raw)
 
     if ws_id == WsId.CHAMBER_TEMP and len(payload) >= 2:
-        try:
-            v = _decode_i16_le(payload)
-            return GrillTelemetry(
-                ws_id=ws_id,
-                chamber=GrillChamber(i16=v, temp_f=_chamber_i16_to_f(v)),
-                raw=raw,
-            )
-        except Exception:
-            return telem
+        # Treat chamber payload as unsigned 16-bit big-endian value in °F.
+        raw_u16 = int.from_bytes(payload[:2], byteorder="big", signed=False)
+        return GrillTelemetry(
+            ws_id=ws_id,
+            chamber=GrillChamber(i16=raw_u16, temp_f=float(raw_u16)),
+            raw=raw,
+        )
 
     if WsId.PROBE_MIN <= ws_id <= WsId.PROBE_MAX and len(payload) >= 2:
         try:
