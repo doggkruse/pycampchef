@@ -1,6 +1,39 @@
 from __future__ import annotations
 
 from typing import Optional
+from .const import WsId
+
+GRILL_OTA_WSIDS: set[WsId] = {
+    WsId.OTA_STATE
+}
+
+DEVICE_INFO_WSIDS: set[WsId] = {
+    WsId.DEVICE_INFO,
+    WsId.CLIENT_SECRET,
+    WsId.WEB_ID,
+    WsId.HTTP_ENDPOINT,
+    WsId.WS_ENDPOINT,
+    WsId.MODEL_FW,
+    WsId.ESP_FW,
+}
+
+GRILL_STATUS_WSIDS: set[WsId] = {
+    WsId.TRANSITIONING,
+    WsId.PELLET_LEVEL,
+    WsId.LAST_FAULT
+}
+
+GRILL_WIFI_WSIDS: set[WsId] = {
+    WsId.WIFI_RSSI,
+    WsId.WIFI_SCANNING,
+    WsId.WIFI_SSID,
+    WsId.WIFI_STATUS
+}
+
+POLL_WSIDS: set[WsId] = {
+    WsId.MODE,
+    WsId.CHAMBER_TEMP,
+} | GRILL_STATUS_WSIDS | GRILL_WIFI_WSIDS | GRILL_OTA_WSIDS
 
 
 def encode_mode_payload(

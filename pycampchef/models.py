@@ -1,11 +1,10 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Optional, TYPE_CHECKING
 
 if TYPE_CHECKING:
     from .const import ModeName, OtaState, WifiStatus, WsId
-
 
 @dataclass(frozen=True)
 class VendorConfig:
@@ -108,3 +107,16 @@ class ModelCapabilities:
     has_high_temp_setting: Optional[bool]
     has_night_mode: Optional[bool]
     max_temp_f: Optional[int]
+
+
+@dataclass(slots=True)
+class GrillState:
+    mode: Optional[GrillMode] = None
+    chamber: Optional[GrillChamber] = None
+    status: Optional[GrillStatus] = None
+    wifi: Optional[GrillWifi] = None
+    device: Optional[GrillDevice] = None
+    ota: Optional[GrillOta] = None
+    probes: dict[int, GrillProbe] = field(default_factory=dict)
+    model: str | None = None
+    last_telem: Optional[GrillTelemetry] = None

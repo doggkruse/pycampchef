@@ -13,8 +13,8 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.append(str(ROOT))
 
-from pycampchef import GrillTelemetry, OtaState
-from pycampchef.const import WsId
+from pycampchef import GrillOta, GrillTelemetry
+from pycampchef.const import OtaState, WsId
 from pycampchef.decoder import decode_notify_payload
 
 GRILL_MODE_NAMES = {
@@ -305,7 +305,7 @@ def main() -> int:
         device = telem.device
         chamber = telem.chamber
         probe = telem.probe
-        ota = telem.ota
+        ota: Optional[GrillOta] = telem.ota
 
         if wifi and wifi.rssi_dbm is not None:
             print(f"{prefix} wifi_rssi_dbm={wifi.rssi_dbm}")

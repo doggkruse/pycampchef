@@ -11,7 +11,7 @@ license = { file = "LICENSE" }
 authors = [{ name = "Geoffrey Kruse" }]
 requires-python = ">=3.11"
 keywords = ["ble", "bluetooth", "home-assistant", "grill", "camp-chef"]
-dependencies = ["bleak>=0.20.0"]
+dependencies = ["bleak>=0.20.0", "bleak_retry_connector"]
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Intended Audience :: Developers",
