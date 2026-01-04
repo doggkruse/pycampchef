@@ -172,15 +172,15 @@ class CampChefBleClient:
             try:
                 raw = await self._read_ws(ws_id)
             except Exception as exc:
-                print(f"read ws=0x{ws_id:02x} error={exc}")
+                _LOGGER.debug("read ws=0x%02x error=%s", ws_id, exc)
                 if self.is_connected:
                     await self.disconnect()
                 break
             if not raw:
-                print(f"read ws=0x{ws_id:02x} empty")
+                _LOGGER.debug("read ws=0x%02x empty", ws_id)
                 continue
             telem = decode_notify_payload(bytes([ws_id]) + raw)
-            print(f"telem={telem}\n")
+            _LOGGER.debug("telem=%s", telem)
             self._reducer.apply(telem)
 
     async def _read_ws(self, ws_id: int) -> bytes:
