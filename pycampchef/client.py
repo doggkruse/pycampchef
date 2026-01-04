@@ -210,6 +210,7 @@ class CampChefBleClient:
             return
         telem = decode_notify_payload(raw)
         self._reducer.apply(telem)
+        _LOGGER.debug("notify telem=%s", telem)
         if self._on_update is not None:
             asyncio.create_task(self._on_update(self.state))
 
