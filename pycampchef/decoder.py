@@ -102,7 +102,7 @@ def _derive_capabilities(info: DeviceInfo) -> ModelCapabilities:
         )
     return ModelCapabilities(
         capabilities_known=False,
-        probe_count=0,
+        probe_count=4,
         sku=None,
         min_temp_f=None,
         spec_max_temp_f=None,
@@ -258,7 +258,7 @@ def decode_notify_payload(raw: bytes) -> GrillTelemetry:
 
     if ws_id == WsId.DEVICE_INFO and payload:
         if len(payload) >= 8:
-            model_id = payload[0:4].decode("ascii", errors="ignore").strip("\x00").strip()
+            model_id = payload[0:4].decode("ascii", errors="ignore").strip("\x00").strip().upper()
             capability_flags = int.from_bytes(payload[4:6], byteorder="big", signed=False)
             max_grill_temp_f = int.from_bytes(payload[6:8], byteorder="big", signed=False)
             info = DeviceInfo(
