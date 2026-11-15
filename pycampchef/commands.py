@@ -5,7 +5,7 @@ import logging
 from dataclasses import dataclass
 from typing import Awaitable, Callable, Optional
 
-from .const import WifiStatus, WsId
+from .const import ModeName, WifiStatus, WsId
 from .decoder import decode_notify_payload
 from .models import GrillMode, GrillTelemetry
 from .protocol import encode_mode_payload
@@ -17,6 +17,14 @@ _LOGGER = logging.getLogger(__name__)
 class GrillCommandClient:
     write_ws: Callable[[int, bytes], Awaitable[None]]
     read_ws: Callable[[int], Awaitable[bytes]]
+
+    async def shutdown(self) -> None:
+        """Request the controller's standby/shutdown cycle, without cutting power.
+
+        Completion of this write does not establish that shutdown has completed.
+        Read the mode/transition telemetry to observe the controller's response.
+        """
+        await self.write_ws(WsId.MODE, encode_mode_payload(ModeName.STANDBY))
 
     async def set_temp_smoke(self, temp_f: int, smoke_level: int) -> None:
         _LOGGER.info(

@@ -42,6 +42,16 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
+## Shutdown
+
+With an already connected client, `await client.commands.shutdown()` requests
+the controller's normal standby/shutdown cycle. Keep the grill powered while
+its controller completes cooling. The method sends only the STANDBY command;
+it does not ignite the grill or switch mains power. A completed BLE write is
+not proof that shutdown has finished; use `await client.commands.read_mode()`
+and subsequent telemetry to observe the controller's response. Transport errors
+propagate to the caller.
+
 ## Tools (Repo Only)
 
 Developer tools live in `tools/` and are not packaged:
